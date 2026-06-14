@@ -1,0 +1,10 @@
+:host {
+    display: block;
+    width: 100%;
+    align-self: stretch;
+}
+
+.page-content {
+    padding: 40px;
+    width: 100%;
+}

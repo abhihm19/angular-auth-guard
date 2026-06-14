@@ -1,0 +1,36 @@
+<div class="card login-container">
+    <div class="card-body">
+        <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+            <h2>Sign In</h2>
+            <br>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username
+                    <span class="text-danger">*</span>    
+                </label>
+                <input type="text" class="form-control" id="username" aria-describedby="username" formControlName="username">
+                <div class="text-danger" *ngIf="signinForm.get('username')?.touched && signinForm.get('username')?.errors?.['required']">
+                    Username is required
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+                <div class="text-danger" *ngIf="signinForm.get('password')?.touched && signinForm.get('password')?.errors?.['required']">
+                    Password is required
+                </div>
+                <div class="text-danger" *ngIf="signinForm.get('password')?.touched && signinForm.get('password')?.errors?.['minlength']">
+                    Password must be at least 8 characters
+                </div>
+                <div class="text-danger" *ngIf="signinForm.get('password')?.touched && signinForm.get('password')?.errors?.['pattern']">
+                    Password must contain at least one capital letter and one special character
+                </div>
+            </div>
+            <div class="text-danger mb-3" *ngIf="invalidCredentials">
+                Invalid username or password
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="signinForm.invalid">Login</button>
+        </form>
+    </div>
+</div>

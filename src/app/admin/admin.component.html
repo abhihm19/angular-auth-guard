@@ -1,0 +1,11 @@
+<app-navbar></app-navbar>
+
+<section class="page-content">
+    <h1>Admin</h1>
+
+    <div class="admin-card">
+        <p *ngIf="loading">Loading admin message...</p>
+        <p *ngIf="!loading && message">{{ message }}</p>
+        <p class="text-danger" *ngIf="!loading && errorMessage">{{ errorMessage }}</p>
+    </div>
+</section>

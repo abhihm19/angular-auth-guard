@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand navbar-dark app-navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/dashboard">Auth Guard</a>
+
+        <div class="navbar-nav me-auto">
+            <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Home</a>
+            <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+        </div>
+
+        <div class="profile-menu">
+            <button class="profile-button" type="button">
+                Profile
+            </button>
+            <div class="profile-dropdown">
+                <button type="button" (click)="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+</nav>
