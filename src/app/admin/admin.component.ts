@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
 
 interface AdminHelloResponse {
   message: string;
@@ -16,17 +15,13 @@ export class AdminComponent {
   loading = true;
   errorMessage = '';
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService
-  ) {
+  constructor(private http: HttpClient) {
     this.loadAdminMessage();
   }
 
   private loadAdminMessage() {
-    this.http.get<AdminHelloResponse>('http://localhost:8080/auth-server/api/admin/hello', {
-      headers: this.authService.getAuthHeaders()
-    }).subscribe({
+    // Authorization header is attached by AuthInterceptor
+    this.http.get<AdminHelloResponse>('http://localhost:8080/auth-server/api/admin/hello').subscribe({
       next: (response) => {
         this.message = response.message;
         this.loading = false;

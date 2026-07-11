@@ -33,6 +33,23 @@ export class AuthService {
     );
   }
 
+  /**
+   * Exchanges the stored refresh token for a new token pair.
+   * The backend rotates the refresh token, so both tokens are replaced.
+   * Emits the new access token; errors if the refresh token is invalid/expired.
+   */
+  refreshAccessToken(): Observable<string> {
+    const refreshToken = this.getRefreshToken() ?? '';
+    const headers = new HttpHeaders({ 'Refresh-Token': refreshToken });
+
+    return this.http.post<LoginResponse>(`${this.baseUrl}/refresh-token`, {}, { headers }).pipe(
+      map((response) => {
+        this.storeTokens(response);
+        return response.accessToken;
+      })
+    );
+  }
+
   isLoggedIn(): boolean {
     return !!this.getAccessToken();
   }
@@ -70,8 +87,12 @@ export class AuthService {
     sessionStorage.removeItem(this.refreshTokenKey);
   }
 
-  private getAccessToken(): string | null {
+  getAccessToken(): string | null {
     return sessionStorage.getItem(this.authTokenKey);
+  }
+
+  getRefreshToken(): string | null {
+    return sessionStorage.getItem(this.refreshTokenKey);
   }
 
   private storeTokens(response: LoginResponse) {
