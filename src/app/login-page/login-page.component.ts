@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SigninForm } from '../model/signin';
 import { AuthService } from '../services/auth.service';
 
@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginPageComponent {
   invalidCredentials = false;
+  loggedOutForInactivity = false;
 
   signinForm = new FormGroup({
     username: new FormControl('', [
@@ -24,8 +25,11 @@ export class LoginPageComponent {
   });
 
   constructor(private router: Router, 
-              private authService: AuthService
-  ) {}
+              private authService: AuthService,
+              route: ActivatedRoute
+  ) {
+    this.loggedOutForInactivity = route.snapshot.queryParamMap.get('reason') === 'inactivity';
+  }
 
   onSubmit() {
     const user = this.signinForm.value as SigninForm;
